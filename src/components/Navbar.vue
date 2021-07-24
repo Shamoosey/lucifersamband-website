@@ -1,40 +1,28 @@
 <template>
-  <div id="navbar">
-      <v-app-bar
-        color="deep-purple accent-4"
-        dense        
-      >
-        <v-toolbar-title>Lucifersam band</v-toolbar-title>
-        <v-spacer></v-spacer>
-        
-        <v-btn icon>
-          <v-icon>mdi-heart</v-icon>
-        </v-btn>
-
-        <v-btn icon>
-          <v-icon>mdi-magnify</v-icon>
-        </v-btn>
-
-        <v-menu
-          left
-          bottom
-        >
-        <v-list>
-          <v-list-item
-            v-for="n in 5"
-            :key="n"
-            @click="() => {}"
-          >
-            <v-list-item-title>Option {{ n }}</v-list-item-title>
+  <div id="navbar-wrapper">
+    <v-app-bar class="navbar-main">
+      <v-app-bar-nav-icon @click="drawer = true" class="navbar-main-menuicon"></v-app-bar-nav-icon>
+      <v-toolbar-title ><v-btn text :href="'/'" class="navbar-main-title">LuciferSamBand</v-btn></v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn icon href="https://www.instagram.com/lucifersamband/" target="_blank">
+        <v-icon class="navbar-main-socialicon">mdi-instagram</v-icon>
+      </v-btn>
+    </v-app-bar>
+    <v-navigation-drawer :overlay-opacity=".5" v-model="drawer" temporary class="navbar-drawer">
+      <v-list nav>
+        <v-list-item-group v-for="data in navData" :key="data">
+          <v-list-item :href="`#${data.redirect}`">
+            <v-list-item-title>{{data.title}}</v-list-item-title>
           </v-list-item>
-        </v-list>
-      </v-menu>
-      </v-app-bar>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator"
+import { Interfaces } from "../interfaces"
 
 @Component({
   components: {
@@ -42,9 +30,46 @@ import { Component, Vue } from "vue-property-decorator"
 })
 
 export default class Navbar extends Vue {
+  drawer:boolean = false
 
+  navData:Interfaces.NavBarItem [] = [
+    {
+      title: "Music",
+      icon: "mdi-music",
+      redirect: "spotify-artist"
+    },
+    {
+      title: "About",
+      icon: "mdi-information-outline",
+      redirect: ""
+    }
+  ]
 }
 </script>
 
 <style>
+  .navbar-main{
+    background-color: transparent !important;
+    box-shadow: none !important;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  .navbar-drawer{
+    margin: 10px;
+    border-radius: 5px;
+    /* background-color: transparent !important; */
+    box-shadow: none !important;
+  }
+  .navbar-main-title {
+    color: white !important;
+  }
+  .navbar-main-title:hover {
+    color: white !important;
+  }
+  .navbar-main-menuicon{
+    color: white !important;
+  }
+  .navbar-main-socialicon{
+    color: white !important;
+  }
 </style>
