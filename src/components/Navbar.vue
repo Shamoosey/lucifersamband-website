@@ -49,6 +49,7 @@ export default class Navbar extends Vue {
   ]
 
   goToDiv(item:string){
+    this.drawer = false;
     let element = document.getElementById(item);
     if(element){
       element.scrollIntoView({behavior: "smooth"});
