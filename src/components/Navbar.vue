@@ -7,12 +7,15 @@
       <v-btn icon href="https://www.instagram.com/lucifersamband/" target="_blank">
         <v-icon class="navbar-main-socialicon">mdi-instagram</v-icon>
       </v-btn>
+      <v-btn icon href="https://open.spotify.com/artist/1rrksm4Ji3AAyzlUqLmxup?si=yxnLpfQrTfay07PvEzXJ1w&dl_branch=1" target="_blank">
+        <v-icon class="navbar-main-socialicon">mdi-spotify</v-icon>
+      </v-btn>
     </v-app-bar>
-    <v-navigation-drawer :overlay-opacity=".5" v-model="drawer" temporary class="navbar-drawer">
+    <v-navigation-drawer v-model="drawer" temporary class="navbar-drawer">
       <v-list nav>
-        <v-list-item-group v-for="data in navData" :key="data">
-          <v-list-item :href="`#${data.redirect}`">
-            <v-list-item-title>{{data.title}}</v-list-item-title>
+        <v-list-item-group v-for="(item, i) in navData" :key="i">
+          <v-list-item @click.prevent="goToDiv(item.redirect)">
+            <v-list-item-title>{{item.title}}</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -36,7 +39,7 @@ export default class Navbar extends Vue {
     {
       title: "Music",
       icon: "mdi-music",
-      redirect: "spotify-artist"
+      redirect: "spotify"
     },
     {
       title: "About",
@@ -44,6 +47,13 @@ export default class Navbar extends Vue {
       redirect: ""
     }
   ]
+
+  goToDiv(item:string){
+    let element = document.getElementById(item);
+    if(element){
+      element.scrollIntoView({behavior: "smooth"});
+    }
+  }
 }
 </script>
 

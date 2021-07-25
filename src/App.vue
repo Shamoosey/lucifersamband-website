@@ -1,8 +1,18 @@
 <template>
   <div id="app">
-    <Navbar/>
-    <div class="spotify-artist" id="spotify-artist">
-      <iframe src="https://open.spotify.com/embed/artist/1rrksm4Ji3AAyzlUqLmxup?theme=0" width="100%" height="380" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+    <div class="app-main">
+      <Navbar/>
+      <div class="app-main-title">
+        <h1>
+          Lucifer Sam and the <br/>
+          Psychedelic Band
+          </h1>
+      </div>
+    </div>
+    <div class="app-subcontent" id="app-subcontent">
+      <div class="spotify-artist panel" id="spotify" ref="spotify">
+        <iframe src="https://open.spotify.com/embed/artist/1rrksm4Ji3AAyzlUqLmxup?theme=0" width="100%" height="380" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+      </div>
     </div>
   </div>
 </template>
@@ -16,10 +26,15 @@ import Navbar from "./components/Navbar.vue"
     Navbar
   }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  getImagePath(image:string) {
+    return require(`./assets/img/${image}`);
+  }
+}
 </script>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@1,700&display=swap');
   @font-face {
   font-family: "Helvetica";
   src: local("Helvetica"),
@@ -29,7 +44,7 @@ export default class App extends Vue {}
     margin: 0;
     font-family: Helvetica;
     height: 100%;
-    overflow: hidden;
+    /* hides scrollbar overflow: hidden; */
   }
   body{
     margin: 0;
@@ -39,19 +54,33 @@ export default class App extends Vue {}
     height: 100%;
     width: 100%;
     margin: 0;
-    background: url('./assets/background.jpg') no-repeat center center !important;
+    background: url('./assets/img/background.jpg') no-repeat center center !important;
     background-size: cover !important;
+    background-attachment: fixed !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+  }
+  .app-main{
+    height: 100%;
   }
   .spotify-artist{
-    width: 50%;
     margin: auto;
+    width:30%;
+    height: 5%;
   }
-
   .spotify-artist iframe{
-    width: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: auto !important;
+  }
+  .app-subcontent {
+    height: 100%;
+  }
+  .app-main-title{
+    font-family: 'Josefin Sans', sans-serif;
+    color: white;
+    text-align: center;
+    font-size: 34px;
   }
 </style>
