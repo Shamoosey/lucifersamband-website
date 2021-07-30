@@ -7,14 +7,17 @@
       <v-btn icon href="https://www.instagram.com/lucifersamband/" target="_blank">
         <v-icon class="navbar-main-socialicon">mdi-instagram</v-icon>
       </v-btn>
-      <v-btn icon href="https://open.spotify.com/artist/1rrksm4Ji3AAyzlUqLmxup?si=yxnLpfQrTfay07PvEzXJ1w&dl_branch=1" target="_blank">
+      <v-btn icon href="https://open.spotify.com/artist/1rrksm4Ji3AAyzlUqLmxup?si=yxnLpfQrTfay07PvEzXJ1w&dl_branch=1" :target="'_blank'">
         <v-icon class="navbar-main-socialicon">mdi-spotify</v-icon>
       </v-btn>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" temporary class="navbar-drawer">
       <v-list nav>
         <v-list-item-group v-for="(item, i) in navData" :key="i">
-          <v-list-item @click.prevent="goToDiv(item.redirect)">
+          <v-list-item v-if="!item.external" @click.prevent="goToDiv(item)" class="navbar-menu-item">
+            <v-list-item-title>{{item.title}}</v-list-item-title>
+          </v-list-item>
+          <v-list-item v-else :href="item.redirect" :target="'_blank'" class="navbar-menu-item">
             <v-list-item-title>{{item.title}}</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
@@ -39,19 +42,22 @@ export default class Navbar extends Vue {
     {
       title: "Music",
       icon: "mdi-music",
-      redirect: "spotify"
+      redirect: "spotify",
+      external: false
     },
     {
-      title: "About",
-      icon: "mdi-information-outline",
-      redirect: ""
+      title: "Follow Us",
+      icon: "mdi-information-spotify",
+      redirect: "https://open.spotify.com/artist/1rrksm4Ji3AAyzlUqLmxup?si=CYu_2Un6Si6AId1iUxAMtg&dl_branch=1",
+      external: true
     }
   ]
 
-  goToDiv(item:string){
+  goToDiv(data:Interfaces.NavBarItem){
     this.drawer = false;
-    let element = document.getElementById(item);
-    if(element){
+    let element = document.getElementById(data.redirect);
+    console.log(data)
+    if(element && !data.external){
       element.scrollIntoView({behavior: "smooth"});
     }
   }
@@ -82,5 +88,8 @@ export default class Navbar extends Vue {
   }
   .navbar-main-socialicon{
     color: white !important;
+  }
+  .navbar-menu-item::before{
+    background: white !important;
   }
 </style>
